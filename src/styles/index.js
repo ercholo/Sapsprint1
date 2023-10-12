@@ -1,0 +1,1 @@
+export * from './celdas.module.css'
