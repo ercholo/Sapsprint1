@@ -5,7 +5,7 @@ import { useKeycloak } from '@react-keycloak/web'
 
 export const Navbar = () => {
 
-    const { keycloak, initialized } = useKeycloak()
+    const { keycloak } = useKeycloak()
 
     const onLogOut = () => {
         keycloak.logout()
@@ -36,10 +36,11 @@ export const Navbar = () => {
                                 Logout
                             </Button>
 
-                            <Typography 
-                            variant="h6" 
-                            component="div" 
-                            sx={{ color: 'blue', fontSize: 16 }}
+                            <Typography
+                                variant="h6"
+                                component="div"
+                                sx={{ color: 'blue', fontSize: 16 }}
+                                align="right"
                             >
                                 {keycloak.idTokenParsed.given_name}
                             </Typography>
