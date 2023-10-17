@@ -1,7 +1,8 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useKeycloak } from "@react-keycloak/web";
 import { useCallback, useState } from "react";
-import { BotonPausa, BotonReanudar, BotonActualizar } from './';
+import { BotonPausa, BotonReanudar, BotonActualizar, BotonEstado } from './';
+import { BotonDesviar } from './BotonDesviar';
 
 //Definimos las columnas
 const columns = [
@@ -57,7 +58,8 @@ const rows = [
 export const TablaPrincipal = () => {
 
     const { keycloak } = useKeycloak();
-    const [renderizoTabla, setRenderizoTabla] = useState(false);
+    const [key, setKey] = useState(0);
+
 
     useState(() => {
         if (keycloak?.authenticated) return;
@@ -72,15 +74,14 @@ export const TablaPrincipal = () => {
 
         rows.find(printer => {
 
+            //Si la impresora coincide y los datos son distintos de los que ya teníamos entonces tralarí 
             if (data.impresora === printer.nameImpresora) {
                 printer.numTrabajos = data.valor
-                console.log(data)
-
+                setKey(key + 1);
             }
+
         });
-        setRenderizoTabla(true)
-    }, [],
-    )
+    }, [key]);
 
     return (
         <>
@@ -114,14 +115,20 @@ export const TablaPrincipal = () => {
                                     <TableCell sx={{ fontWeight: 'bold', color: '#1873CC', fontSize: 18 }} style={{ width: 10 }} align="left">
                                         {row.numAlmacen}
                                     </TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 160 }} align="left">
+                                    <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 60 }} align="left">
                                         <BotonActualizar printer={row.nameImpresora} recibirDatos={recibirDatosActualizados} />
                                     </TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 160 }} align="left">
+                                    <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 60 }} align="left">
                                         <BotonPausa printer={row.nameImpresora} />
                                     </TableCell>
-                                    <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 160 }} align="left">
+                                    <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 60 }} align="left">
                                         <BotonReanudar printer={row.nameImpresora} />
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 60 }} align="left">
+                                        <BotonEstado printer={row.nameImpresora} />
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 60 }} align="left">
+                                        <BotonDesviar printer={row.nameImpresora} />
                                     </TableCell>
                                 </TableRow>
 
