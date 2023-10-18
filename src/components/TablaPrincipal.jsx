@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useKeycloak } from "@react-keycloak/web";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BotonPausa, BotonReanudar, BotonActualizar, BotonEstado } from './';
 import { BotonDesviar } from './BotonDesviar';
 
@@ -58,8 +58,7 @@ const rows = [
 export const TablaPrincipal = () => {
 
     const { keycloak } = useKeycloak();
-    const [key, setKey] = useState(0);
-
+    const [ valor, setValor ] = useState({});
 
     useState(() => {
         if (keycloak?.authenticated) return;
@@ -69,19 +68,23 @@ export const TablaPrincipal = () => {
 
 
     const recibirDatosActualizados = useCallback((data) => {
-
+        
         console.log("reciboDatosActualizados")
-
+        console.log(data)
+        
         rows.find(printer => {
-
             //Si la impresora coincide y los datos son distintos de los que ya teníamos entonces tralarí 
-            if (data.impresora === printer.nameImpresora) {
-                printer.numTrabajos = data.valor
-                setKey(key + 1);
+            if (data?.impresora === printer.nameImpresora) {
+                printer.numTrabajos = data.valor        
             }
-
+            setValor(() => data)
         });
-    }, [key]);
+    }, []);
+
+    useEffect(() => {
+        recibirDatosActualizados();
+    }, [recibirDatosActualizados])
+
 
     return (
         <>

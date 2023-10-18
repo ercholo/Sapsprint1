@@ -24,7 +24,7 @@ export const DialogEstado = ({ openDialog, setOpenDialog, estado }) => {
                 onClose={handleClose}
                 aria-describedby="estado-y-ultimo-trabajo"
             >
-                <DialogTitle>
+                <DialogTitle style={{ backgroundColor: '#FACD01'}}>
                     <span style={{ color: '#1563B0' }}>Estado impresora {estado.impresora} </span>
                 </DialogTitle>
                 <DialogContent>
