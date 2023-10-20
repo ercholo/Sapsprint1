@@ -1,13 +1,11 @@
 import { Route, Routes } from "react-router-dom"
-import { TablaPrincipal } from "../components/TablaPrincipal"
+import { TablaSantomera, TablaCartagena, Token } from "../components/"
 import { Navbar } from "../ui/components/Navbar"
 import { useKeycloak } from "@react-keycloak/web";
 import { Backdrop, CircularProgress } from "@mui/material";
-import { BrowserRouter } from 'react-router-dom'
-
+import { PaginaPrincipal } from "../pages/PaginaPrincipal";
 
 export const AppRouter = () => {
-
 
     const { initialized } = useKeycloak();
 
@@ -22,12 +20,13 @@ export const AppRouter = () => {
     return (
         <>
             <Navbar />
-            <div className='container'>
-                <BrowserRouter>
+            <div className='container'>                
                     <Routes>
-                        <Route path="/*" element={<TablaPrincipal />} />
-                    </Routes>
-                </BrowserRouter>
+                        <Route path="/*" element={<PaginaPrincipal />} />
+                        <Route path="/santomera" element={<TablaSantomera />} />
+                        <Route path="/cartagena" element={<TablaCartagena />} />
+                        <Route path="/token" element={<Token />} />
+                    </Routes>               
             </div>
         </>
     )

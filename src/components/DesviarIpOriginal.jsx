@@ -5,15 +5,15 @@ import { useState, useEffect, memo } from 'react';
 
 export const BotonDesviaIpOriginal = memo(({ printer, isDisabled }) => {
 
-    const [disabled, setDisabled ] = useState(isDisabled)
+    const [disabled, setDisabled] = useState(isDisabled)
 
     useEffect(() => {
         setDisabled(isDisabled);
     }, [isDisabled]);
 
-    const onDesvioOriginal = async(printer) => {
+    const onDesvioOriginal = async (printer) => {
 
-        console.log(`Impresora devuelta a su sitio original ${printer}`);    
+        console.log(`Impresora devuelta a su sitio original ${printer}`);
 
         try {
             const res = await fetch(`http://172.30.5.181:8888/impresoras/${printer}/desviarImpresoraOriginal`, {
@@ -29,19 +29,14 @@ export const BotonDesviaIpOriginal = memo(({ printer, isDisabled }) => {
         }
     }
 
-    //Lo ejecuta una vez para todas las impresoras
-    // useEffect(() => {
-    //     handleClick();
-    // }, [handleClick]);
-
     return (
         <>
-            <Button               
+            <Button
                 startIcon={<MergeIcon />}
-                disabled = {disabled}
+                disabled={disabled}
                 onClick={() =>
                     onDesvioOriginal(printer)}>
-                Desviar por su sitio original
+                Restablecer a su sitio original
             </Button>
         </>
     )

@@ -20,7 +20,7 @@ export const BotonActualizar = memo(({ printer, recibirDatos }) => {
     const onActualiza = async (printer) => {
 
         console.log("hago llamada para actualizar")
-    
+
         try {
             const res = await fetch(`http://172.30.5.181:8888/impresoras/${printer}/`, {
                 method: 'GET'
@@ -58,20 +58,22 @@ export const BotonActualizar = memo(({ printer, recibirDatos }) => {
                 Actualizar
             </Button>
             {
-                showAlertSuccess ?
+                showAlertSuccess && (
                     <Snackbar open={showAlertSuccess} autoHideDuration={3000} onClose={handleClose}>
                         <Alert severity="success">
                             <AlertTitle>Datos actualizados</AlertTitle>
                         </Alert>
                     </Snackbar>
-                    :
+                )}
+            {
+                showAlertError && (
                     <Snackbar open={showAlertError} autoHideDuration={2000} onClose={handleClose}>
                         <Alert severity="error">
                             <AlertTitle>Error</AlertTitle>
                             This is an error alert — <strong>check it out!</strong>
                         </Alert>
                     </Snackbar>
-            }
+                )}
         </Stack>
     )
 })

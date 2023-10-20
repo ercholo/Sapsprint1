@@ -64,6 +64,26 @@ const impresorasPapel = [
     {
         impresora: "01ATTOM02",
         ip: "172.30.2.120"
+    },
+    {
+        impresora: "03ADCOM01",
+        ip: "172.30.30.247"
+    },
+    {
+        impresora: "03ATTOM01",
+        ip: "172.30.30.246"
+    },
+    {
+        impresora: "03ALSAL01",
+        ip: "172.30.30.245"
+    },
+    {
+        impresora: "03ALAV101",
+        ip: "172.30.30.248"
+    },
+    {
+        impresora: "03ALAV102",
+        ip: "172.30.30.249"
     }
 ]
 
@@ -150,21 +170,22 @@ export const DialogDesviar = ({ setOpenDialog, openDialog, estado }) => {
                                             ))
                                     }
                                     {
-                                        showAlertSuccess
-                                            ?
+                                        showAlertSuccess && (
                                             <Snackbar open={showAlertSuccess} autoHideDuration={3000} onClose={handleClose}>
                                                 <Alert severity="success">
                                                     <AlertTitle>Desviada correctamente</AlertTitle>
                                                 </Alert>
                                             </Snackbar>
-                                            :
-                                            <Snackbar open={showAlertError} autoHideDuration={3000} onClose={handleClose}>
+                                        )}
+                                    {
+                                        showAlertError && (
+                                            <Snackbar open={showAlertError} autoHideDuration={2000} onClose={handleClose}>
                                                 <Alert severity="error">
                                                     <AlertTitle>Error</AlertTitle>
                                                     This is an error alert — <strong>check it out!</strong>
                                                 </Alert>
                                             </Snackbar>
-                                    }
+                                        )}
                                 </Stack>
                         }
                     </DialogContentText>

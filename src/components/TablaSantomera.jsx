@@ -1,7 +1,6 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { useKeycloak } from "@react-keycloak/web";
 import { useCallback, useEffect, useState } from "react";
-import { BotonPausa, BotonReanudar, BotonActualizar, BotonEstado } from './';
+import { BotonPausa, BotonReanudar, BotonActualizar, BotonEstado } from '.';
 import { BotonDesviar } from './BotonDesviar';
 
 //Definimos las columnas
@@ -27,6 +26,41 @@ const columns = [
         align: 'left',
         format: (value) => value.toFixed(2),
     },
+    {
+        id: 'gris',
+        label: '',
+        minWidth: 60,
+        align: 'left',
+        format: (value) => value.toFixed(2),
+    },
+    {
+        id: 'gris1',
+        label: '',
+        minWidth: 60,
+        align: 'left',
+        format: (value) => value.toFixed(2),
+    },
+    {
+        id: 'gris2',
+        label: '',
+        minWidth: 60,
+        align: 'left',
+        format: (value) => value.toFixed(2),
+    },
+    {
+        id: 'gris3',
+        label: '',
+        minWidth: 60,
+        align: 'left',
+        format: (value) => value.toFixed(2),
+    },
+    {
+        id: 'gris4',
+        label: '',
+        minWidth: 60,
+        align: 'left',
+        format: (value) => value.toFixed(2),
+    }
 ];
 
 //Funcion para crear las futuras filas (rows)
@@ -55,22 +89,14 @@ const rows = [
 ]
 
 //Funcion donde se definie la tabla con stickyhead
-export const TablaPrincipal = () => {
+export const TablaSantomera = () => {
 
-    const { keycloak } = useKeycloak();
-    const [ valor, setValor ] = useState({});
-
-    useState(() => {
-        if (keycloak?.authenticated) return;
-        keycloak?.login();
-    }, [keycloak]);
-
-
+    const [ , setValor ] = useState({});
 
     const recibirDatosActualizados = useCallback((data) => {
         
-        console.log("reciboDatosActualizados")
-        console.log(data)
+        console.log("reciboDatosActualizados");
+        console.log(data);
         
         rows.find(printer => {
             //Si la impresora coincide y los datos son distintos de los que ya teníamos entonces tralarí 
@@ -83,7 +109,7 @@ export const TablaPrincipal = () => {
 
     useEffect(() => {
         recibirDatosActualizados();
-    }, [recibirDatosActualizados])
+    }, [recibirDatosActualizados]);
 
 
     return (

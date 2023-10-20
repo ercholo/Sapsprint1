@@ -56,20 +56,22 @@ export const BotonPausa = memo(({ printer }) => {
                 {buttonText}
             </Button>
             {
-                showAlertSuccess ?
+                showAlertSuccess && (
                     <Snackbar open={showAlertSuccess} autoHideDuration={3000} onClose={handleClose}>
                         <Alert severity="success">
                             <AlertTitle>Pausada correctamente</AlertTitle>
                         </Alert>
                     </Snackbar>
-                    :
-                    <Snackbar open={showAlertError} autoHideDuration={3000} onClose={handleClose}>
+                )}
+            {
+                showAlertError && (
+                    <Snackbar open={showAlertError} autoHideDuration={2000} onClose={handleClose}>
                         <Alert severity="error">
                             <AlertTitle>Error</AlertTitle>
                             This is an error alert — <strong>check it out!</strong>
                         </Alert>
                     </Snackbar>
-            }
+                )}
         </Stack>
     )
 });

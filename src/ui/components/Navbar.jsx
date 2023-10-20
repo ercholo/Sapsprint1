@@ -1,19 +1,60 @@
-
 import { AppBar, Box, Toolbar, Typography, Button, IconButton } from '@mui/material/';
-import MenuIcon from '@mui/icons-material/Menu';
+import PrintIcon from '@mui/icons-material/Print';
 import { useKeycloak } from '@react-keycloak/web'
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export const Navbar = () => {
 
-    const { keycloak } = useKeycloak()
+    const { keycloak, initialized } = useKeycloak()
+
+    useState(() => {
+        if (keycloak?.authenticated) return;
+        keycloak?.login();
+    }, [keycloak]);
+
+    // useEffect(() => {
+
+    //     const interval = setInterval(() => {
+    //         console.log("token "+keycloak.token )
+    //         console.log("initialized "+initialized )
+    //         console.log("authenticated "+keycloak.authenticated )
+    //         console.log("isTokenExpired "+keycloak.isTokenExpired(50))
+            
+    //     }, 6000);
+    //     return () => clearInterval(interval);
+    // }, [keycloak, initialized]);
+   
+
+    useEffect(() => {
+        if (initialized) {
+            // Establece el manejador de eventos onTokenExpired
+            keycloak.onTokenExpired = () => {
+                console.log('Españoles el token ha expirado.');
+                // Renueva el token
+                keycloak.updateToken(50)
+                    .then((refreshed) => {
+                        if (refreshed) {
+                            console.log('Token refreshhhcado');
+                        } else {
+                            console.log('No ha podido renovarse el token');                        
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error al intentar renovar el token:', error);
+                        
+                    });
+            };
+        }
+    }, [keycloak, initialized]);
 
     const onLogOut = () => {
         keycloak.logout()
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" sx={{ bgcolor: '#FACD01' }}>
+        <Box style={{ marginTop: 80 }}>
+            <AppBar position="fixed" sx={{ bgcolor: '#FACD01' }}>
                 <Toolbar >
                     <IconButton
                         size="large"
@@ -22,30 +63,46 @@ export const Navbar = () => {
                         aria-label="menu"
                         sx={{ mr: 2 }}
                     >
-                        <MenuIcon />
+                        <PrintIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Santomera
-                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+                        <NavLink to="/santomera" style={{ textDecoration: "none" }}>
+                            <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
+                                Santomera
+                            </Typography>
+                        </NavLink>
+                        <NavLink to="/cartagena" style={{ textDecoration: "none" }}>
+                            <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
+                                Cartagena
+                            </Typography>
+                        </NavLink>
+                        <NavLink to="/token" style={{ textDecoration: "none" }}>
+                            <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
+                                Token
+                            </Typography>
+                        </NavLink>
+                    </Box>
+
                     {!!keycloak.authenticated && (
                         <>
-                            <Button
-                                sx={{ fontWeight: 'bold', color: 'red', fontSize: 18, textTransform: 'none' }}
-                                onClick={onLogOut}
-                            >
-                                Logout
-                            </Button>
-
                             <Typography
                                 variant="h6"
                                 component="div"
-                                sx={{ color: 'blue', fontSize: 16 }}
+                                sx={{ color: 'blue', fontSize: 18, marginRight: 2 }}
                                 align="right"
                             >
-                                {keycloak.idTokenParsed.given_name}
+                                ¡ Hola {keycloak.idTokenParsed.given_name} !
                             </Typography>
+                            <Button
+                                sx={{ fontWeight: 'bold', color: 'red', fontSize: 18, textTransform: 'none' }}
+                                onClick={onLogOut}
+                                align="right"
+                            >
+                                Logout
+                            </Button>
                         </>
                     )}
+
                 </Toolbar>
             </AppBar>
         </Box>
