@@ -65,7 +65,6 @@ const columns = [
 
 //Funcion para crear las futuras filas (rows)
 function createData(nameImpresora, numTrabajos, numAlmacen, tipo) {
-    console.log('creo las tablas createData')
     return { nameImpresora, numTrabajos, numAlmacen, tipo };
 }
 
@@ -85,7 +84,7 @@ const rows = [
     createData('01ALSAF01', 0, 'RG01', 'papel'),
     createData('01ALSAL01', 0, 'RG01', 'papel'),
     createData('01ATTOM01', 0, 'RG01', 'papel'),
-    createData('01ATTOM02', 0, 'RG01', 'papel')
+    createData('01ATTOM02', 0, 'RG01', 'papel'),
 ]
 
 //Funcion donde se definie la tabla con stickyhead
@@ -95,7 +94,6 @@ export const TablaSantomera = () => {
 
     const recibirDatosActualizados = useCallback((data) => {
         
-        console.log("reciboDatosActualizados");
         console.log(data);
         
         rows.find(printer => {
@@ -110,7 +108,6 @@ export const TablaSantomera = () => {
     useEffect(() => {
         recibirDatosActualizados();
     }, [recibirDatosActualizados]);
-
 
     return (
         <>

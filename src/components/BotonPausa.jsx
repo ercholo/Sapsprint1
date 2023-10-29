@@ -3,28 +3,29 @@ import { useState, forwardRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import PauseIcon from '@mui/icons-material/Pause';
 import MuiAlert from '@mui/material/Alert';
+import { useKeycloak } from '@react-keycloak/web';
 
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-
 //uso el memo para que no renderice los botones cuando el componente padre (tablaPrincipal) cambia el estado actualizando la tabla
 export const BotonPausa = memo(({ printer }) => {
-
-
-    console.log('renderizo boton pausar')
 
     const [buttonText, setButtonText] = useState('Pausar');
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
     const [showAlertError, setShowAlertError] = useState(false);
+    const { keycloak } = useKeycloak();
 
     const onPausa = async (printer) => {
 
         // La función para manejar el punchar el botón ¿fetch?
         try {
             const res = await fetch(`http://172.30.5.181:8888/impresoras/${printer}/pausa/`, {
-                method: 'GET'
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${keycloak.token}`
+                }
             })
             const data = await res.json();
             data.pausa ? setShowAlertSuccess(true) : setShowAlertError(true);

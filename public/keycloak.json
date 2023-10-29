@@ -1,0 +1,10 @@
+{
+    "realm": "hefame-ldap-tst",
+    "auth-server-url": "https://keycloak.hefame.es/",
+    "ssl-required": "external",
+    "resource": "front-sapsprint",
+    "public-client": true,
+    "verify-token-audience": true,
+    "use-resource-role-mappings": true,
+    "confidential-port": 0
+  }

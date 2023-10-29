@@ -2,7 +2,6 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { useCallback, useEffect, useState } from "react";
 import { BotonPausa, BotonReanudar, BotonActualizar, BotonEstado } from '.';
 import { BotonDesviar } from './BotonDesviar';
-import styles from '../styles/celdas.module.css';
 
 //Definimos las columnas
 const columns = [
@@ -71,26 +70,28 @@ function createData(nameImpresora, numTrabajos, numAlmacen, tipo) {
 
 //Llamada a la funcion que genera las filas pasándole datos de relleno iniciales
 const rows = [
-    createData('03ALAV101', 0, 'RG03', 'papel'),
-    createData('03ALAV102', 0, 'RG03', 'papel'),
-    createData('03ATTOM01', 0, 'RG03', 'papel'),
-    createData('03ALSAL01', 0, 'RG03', 'papel'),
-    createData('03ADCOM01', 0, 'RG03', 'papel'),
+    createData('06ADCOM01', 0, 'RG06', 'papel'),
+    createData('06ALAV101', 0, 'RG06', 'papel'),
+    createData('06ALAV102', 0, 'RG06', 'papel'),
+    createData('06ALDEV01', 0, 'RG06', 'papel'),
+    createData('06ALEXP01', 0, 'RG06', 'papel'),
+    createData('06ALJEF01', 0, 'RG06', 'papel'),
+    createData('06ATTOM01', 0, 'RG06', 'papel'),
 ]
 
 //Funcion donde se definie la tabla con stickyhead
-export const TablaCartagena = () => {
+export const TablaAlicante = () => {
 
-    const [valor, setValor] = useState({});
+    const [ , setValor ] = useState({});
 
     const recibirDatosActualizados = useCallback((data) => {
-
+        
         console.log(data);
-
+        
         rows.find(printer => {
             //Si la impresora coincide y los datos son distintos de los que ya teníamos entonces tralarí 
             if (data?.impresora === printer.nameImpresora) {
-                printer.numTrabajos = data.valor
+                printer.numTrabajos = data.valor        
             }
             setValor(() => data)
         });
@@ -100,16 +101,6 @@ export const TablaCartagena = () => {
         recibirDatosActualizados();
     }, [recibirDatosActualizados]);
 
-
-    const getBackgroundColor = ( filaEvaluadaError ) => {
-
-        return rows.find(printer => {
-
-            if (printer.nameImpresora === filaEvaluadaError && valor?.error === true) {
-                return styles.red
-            }
-        })
-    }
 
     return (
         <>
@@ -133,7 +124,7 @@ export const TablaCartagena = () => {
                         <TableBody>
                             {rows.map((row) => (
 
-                                <TableRow key={row.nameImpresora} hover={true} className={getBackgroundColor(row.nameImpresora) === undefined ? styles.white : styles.red}>
+                                <TableRow key={row.nameImpresora} hover={true}>
                                     <TableCell sx={{ fontWeight: 'bold', color: '#1563B0', fontSize: 18 }} component="th" scope="row" >
                                         {row.nameImpresora}
                                     </TableCell>
@@ -144,7 +135,7 @@ export const TablaCartagena = () => {
                                         {row.numAlmacen}
                                     </TableCell>
                                     <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 60 }} align="left">
-                                        <BotonActualizar printer={row.nameImpresora} recibirDatos={recibirDatosActualizados}/>
+                                        <BotonActualizar printer={row.nameImpresora} recibirDatos={recibirDatosActualizados} />
                                     </TableCell>
                                     <TableCell sx={{ fontWeight: 'bold' }} style={{ width: 60 }} align="left">
                                         <BotonPausa printer={row.nameImpresora} />

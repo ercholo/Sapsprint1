@@ -1,12 +1,12 @@
 import { AppBar, Box, Toolbar, Typography, Button, IconButton } from '@mui/material/';
 import PrintIcon from '@mui/icons-material/Print';
 import { useKeycloak } from '@react-keycloak/web'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 export const Navbar = () => {
 
-    const { keycloak, initialized } = useKeycloak()
+    const { keycloak } = useKeycloak()
 
     useState(() => {
         if (keycloak?.authenticated) return;
@@ -26,27 +26,27 @@ export const Navbar = () => {
     // }, [keycloak, initialized]);
    
 
-    useEffect(() => {
-        if (initialized) {
-            // Establece el manejador de eventos onTokenExpired
-            keycloak.onTokenExpired = () => {
-                console.log('Españoles el token ha expirado.');
-                // Renueva el token
-                keycloak.updateToken(50)
-                    .then((refreshed) => {
-                        if (refreshed) {
-                            console.log('Token refreshhhcado');
-                        } else {
-                            console.log('No ha podido renovarse el token');                        
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error al intentar renovar el token:', error);
+    // useEffect(() => {
+    //     if (initialized) {
+    //         // Establece el manejador de eventos onTokenExpired
+    //         keycloak.onTokenExpired = () => {
+    //             console.log('Españoles el token ha expirado.');
+    //             // Renueva el token
+    //             keycloak.updateToken(50)
+    //                 .then((refreshed) => {
+    //                     if (refreshed) {
+    //                         console.log('Token refreshhhcado');
+    //                     } else {
+    //                         console.log('No ha podido renovarse el token');                        
+    //                     }
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error('Error al intentar renovar el token:', error);
                         
-                    });
-            };
-        }
-    }, [keycloak, initialized]);
+    //                 });
+    //         };
+    //     }
+    // }, [keycloak, initialized]);
 
     const onLogOut = () => {
         keycloak.logout()
@@ -66,14 +66,34 @@ export const Navbar = () => {
                         <PrintIcon />
                     </IconButton>
                     <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-                        <NavLink to="/santomera" style={{ textDecoration: "none" }}>
+                        <NavLink to="/albacete" style={{ textDecoration: "none" }}>
                             <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
-                                Santomera
+                                Albacete
+                            </Typography>
+                        </NavLink>
+                        <NavLink to="/alicante" style={{ textDecoration: "none" }}>
+                            <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
+                                Alicante
+                            </Typography>
+                        </NavLink>
+                        <NavLink to="/almeria" style={{ textDecoration: "none" }}>
+                            <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
+                                Almeria
                             </Typography>
                         </NavLink>
                         <NavLink to="/cartagena" style={{ textDecoration: "none" }}>
                             <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
                                 Cartagena
+                            </Typography>
+                        </NavLink>
+                        <NavLink to="/gerona" style={{ textDecoration: "none" }}>
+                            <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
+                                Gerona
+                            </Typography>
+                        </NavLink>
+                        <NavLink to="/santomera" style={{ textDecoration: "none" }}>
+                            <Typography variant="h6" component="div" align="left" sx={{ mr: 2 }}>
+                                Santomera
                             </Typography>
                         </NavLink>
                         <NavLink to="/token" style={{ textDecoration: "none" }}>
