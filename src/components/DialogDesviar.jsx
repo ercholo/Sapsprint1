@@ -175,8 +175,6 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 export const DialogDesviar = memo(({ setOpenDialog, openDialog, estado }) => {
 
-    console.log("renderizo el dialogDesviar");
-
     //Si existe la prop(cuando llega) coge los dos primeros caracteres para saber de que almacen es la imperesora que se quiere desviar.
     const almImp = estado?.impresora?.substring(0, 2) || '';
 
@@ -185,8 +183,6 @@ export const DialogDesviar = memo(({ setOpenDialog, openDialog, estado }) => {
     const { keycloak } = useKeycloak();
 
     const handleDesviar = async (impresoraDestino) => {
-
-        console.log(`Desviar la impresora ${estado.impresora} por ${impresoraDestino}`);
 
         try {
             const res = await fetch(`http://172.30.5.181:8888/impresoras/${estado.impresora}/${impresoraDestino}/desviar`, {

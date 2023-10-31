@@ -20,8 +20,6 @@ export const DialogEstado = memo(({ openDialog, setOpenDialog, estado }) => {
         setShowAlertError(false);
     };
 
-    console.log("renderizo el dialogEstado");
-
     return (
         <div>
             <Dialog
@@ -68,7 +66,7 @@ export const DialogEstado = memo(({ openDialog, setOpenDialog, estado }) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <BotonDesviaIpOriginal printer={estado.impresora} isDisabled={estado.desviada ? false : true} handleClose={handleClose} setShowAlertSuccess={setShowAlertSuccess} />
+                    <BotonDesviaIpOriginal printer={estado.impresora} isDisabled={estado.desviada ? false : true} handleClose={handleClose} setShowAlertError={setShowAlertError} />
                     {/* <BotonPagPrueba printer={estado.impresora} /> */}
                     <Button onClick={handleClose}>Cerrar</Button>
                 </DialogActions>

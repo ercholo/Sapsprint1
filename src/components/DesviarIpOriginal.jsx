@@ -4,7 +4,7 @@ import MergeIcon from '@mui/icons-material/Merge';
 import { useState, useEffect, memo } from 'react';
 import { useKeycloak } from '@react-keycloak/web';
 
-export const BotonDesviaIpOriginal = memo(({ printer, isDisabled, handleClose, setShowAlertSuccess }) => {
+export const BotonDesviaIpOriginal = memo(({ printer, isDisabled, handleClose, setShowAlertError }) => {
 
     const [disabled, setDisabled] = useState(isDisabled);
     const { keycloak } = useKeycloak();
@@ -23,15 +23,12 @@ export const BotonDesviaIpOriginal = memo(({ printer, isDisabled, handleClose, s
                 }
             });
             const { desviadaOriginal } = await res.json();
-            
-            //Si desviadaOriginal es true (Si ha hecho correcto el restablecer) mando cerrar el dialog
-            // desviadaOriginal ? setShowAlertSuccess(true) : null;
 
-            if (desviadaOriginal) {
-                setShowAlertSuccess(true);
-                handleClose();
-            }
-        
+            //Si desviadaOriginal es true (Si ha hecho correcto el restablecer) mando cerrar el dialog
+            desviadaOriginal ? handleClose() : setShowAlertError(true);
+
+
+
         } catch (error) {
             console.log(error);
         } finally {
@@ -56,7 +53,7 @@ BotonDesviaIpOriginal.propTypes = {
     printer: PropTypes.string,
     isDisabled: PropTypes.bool,
     handleClose: PropTypes.func,
-    setShowAlertSuccess: PropTypes.func,
+    setShowAlertError: PropTypes.func,
 }
 
 BotonDesviaIpOriginal.displayName = 'BotonDesviaIpOriginal';
